@@ -19,20 +19,15 @@ import gov.nih.nlm.iti.text.model.FigureMention;
 import gov.nih.nlm.iti.text.model.Journal;
 import gov.nih.nlm.iti.text.model.PublicationDate;
 import gov.nih.nlm.iti.text.nxml.TextRange;
-import org.novasearch.medical.medannotator.MedAnnotatorAux;
 
 /*
  * Example class to demonstrate the usage of the NXML Parser
  */
 public class Driver {
 
-	public static final String DATA_PATH = "/home/amourao/code/jmedical/iclefj/data/mesh/";
-
 	public static void main(String args[]) throws IOException {
 		// Provide the path to NXML file on disk.
 		String inputFileName = "/home/amourao/code/jmedical/OpenI-NxmlParser/nxml/3232562.nxml";
-		inputFileName = "/home/amourao/Desktop/1743-422X-9-248.nxml";
-		inputFileName = "/media/Share/2018-04_sample_pubmedlists_extracted/02/a8/PMC4458552/CRIPE2015-938264.nxml";
 		
 		File inputFile = new File(inputFileName);
 
@@ -214,45 +209,9 @@ public class Driver {
 
 		System.out
 				.println("-------------------- Article Full Text --------------------");
-		System.out.println(articleMeta.getFullText());
-
-		HashSet<String> demoSet = MedAnnotatorAux.load(DATA_PATH
-				+ "demographics.txt");
-		HashSet<String> placeSet = MedAnnotatorAux.load(DATA_PATH
-				+ "place_names.txt");
-		HashSet<String> ageSet_suff = MedAnnotatorAux.loadAge(DATA_PATH
-				+ "age_suffix.txt");
-		HashSet<String> ageSet_pref = MedAnnotatorAux.loadAge(DATA_PATH
-				+ "age_prefix.txt");
-
-		HashMap<String, String> exp = MedAnnotatorAux
-				.loadExceptionList(DATA_PATH + "demographics_prefered.txt");
-
-		HashSet<String> C = MedAnnotatorAux.load(DATA_PATH + "C.txt");
-		// HashSet<String> D =
-		// MedAnnotatorAux.load("/home/amourao/code/jmedical/iclefj/data/mesh/D_base.txt");
-		HashSet<String> E = MedAnnotatorAux.load(DATA_PATH + "E.txt");
-
-		HashSet<String> megaSet = new HashSet<String>();
-		megaSet.addAll(C);
-		megaSet.addAll(E);
 
 		String abstractText = document.getTitle() + " " + document.getAbstractText();
 		abstractText = abstractText.replaceAll("\\W ", " ");
-		Set<String> demotags = MedAnnotatorAux.getTotalWords(abstractText,
-				demoSet, exp);
-		Set<String> placetags = MedAnnotatorAux.getTotalWords(abstractText,
-				placeSet, new HashMap<String, String>());
-		List<Integer> agetags = MedAnnotatorAux.getNumericalAge(abstractText,
-				ageSet_suff, ageSet_pref);
-		Set<String> meshtags = MedAnnotatorAux.getTotalWords(abstractText,
-				megaSet, new HashMap<String, String>());
-
-		System.out.println(demotags);
-		System.out.println(placetags);
-		System.out.println(agetags);
-		System.out.println(meshtags);
-
 	}
 
 	public static PmcFull getInfo(String inputFile) {
@@ -489,4 +448,5 @@ public class Driver {
 		return document;
 
 	}
+	
 }
